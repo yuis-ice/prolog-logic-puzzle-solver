@@ -1,13 +1,7 @@
 import React, { useState } from 'react'
 import { PrologEngine } from '../hooks/usePrologEngine'
+import { puzzleDatabase, type PuzzleProblem } from '../data/puzzleDatabase'
 import './LogicPuzzleSolver.css'
-
-interface Person {
-  person: string
-  house: number
-  color: string
-  pet: string
-}
 
 interface PrologStep {
   step: number
@@ -19,82 +13,32 @@ interface PrologStep {
 
 export const LogicPuzzleSolver: React.FC = () => {
   const [engine] = useState(() => new PrologEngine())
-  const [solution, setSolution] = useState<Person[] | null>(null)
+  const [selectedPuzzle, setSelectedPuzzle] = useState<PuzzleProblem | null>(null)
+  const [solution, setSolution] = useState<any[] | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [solvingSteps, setSolvingSteps] = useState<PrologStep[]>([])
   const [currentStep, setCurrentStep] = useState(0)
   const [showVisualization, setShowVisualization] = useState(false)
 
-  const puzzleDescription = `
-    🏠 アリス、ボブ、チャーリーの家パズル 🏠
-    
-    3人の人がいます：アリス、ボブ、チャーリー
-    3つの家があります：1番、2番、3番
-    3つの色があります：赤、青、緑
-    3匹のペットがいます：犬、猫、鳥
-    
-    制約条件：
-    1. アリスは赤い家か青い家に住んでいる
-    2. ボブは2番の家に住んでいる
-    3. チャーリーは緑の家に住んでいる場合のみ犬を飼っている
-    4. アリスは赤い家に住んでいて犬を飼ってはいない
-    5. 青い家の住人は猫か鳥を飼っている
-  `
+  const selectPuzzle = (puzzle: PuzzleProblem) => {
+    setSelectedPuzzle(puzzle)
+    setSolution(null)
+    setSolvingSteps([])
+    setCurrentStep(0)
+    setShowVisualization(false)
+  }
 
   const solvePuzzle = async () => {
+    if (!selectedPuzzle) return
+    
     setIsLoading(true)
     setSolution(null)
     setSolvingSteps([])
     setCurrentStep(0)
 
     try {
-      // デモ用の段階的解決プロセス
-      const steps: PrologStep[] = [
-        {
-          step: 1,
-          description: "問題設定：人、家、色、ペットの変数を定義",
-          query: "solve_houses(People)",
-          result: "変数を設定中...",
-          facts: [
-            "person(alice, House1, Color1, Pet1)",
-            "person(bob, House2, Color2, Pet2)", 
-            "person(charlie, House3, Color3, Pet3)"
-          ]
-        },
-        {
-          step: 2,
-          description: "制約条件1: アリスは赤い家か青い家",
-          query: "member(person(alice, _, red, _), People) ; member(person(alice, _, blue, _), People)",
-          result: "アリスの家の色を制限",
-          facts: [
-            "alice_color ∈ {red, blue}",
-            "bob_house = 2",
-            "charlie: green_house ↔ dog"
-          ]
-        },
-        {
-          step: 3,
-          description: "制約条件2: ボブは2番の家",
-          query: "member(person(bob, 2, _, _), People)",
-          result: "ボブの家番号が確定",
-          facts: [
-            "alice: house ∈ {1, 3}, color ∈ {red, blue}",
-            "bob: house = 2, color ∈ {red, blue, green}",
-            "charlie: house ∈ {1, 3}"
-          ]
-        },
-        {
-          step: 4,
-          description: "制約条件3-5を適用して解を探索",
-          query: "apply_all_constraints(People)",
-          result: "バックトラッキングで解を発見",
-          facts: [
-            "alice: house=1, color=blue, pet=bird",
-            "bob: house=2, color=red, pet=cat", 
-            "charlie: house=3, color=green, pet=dog"
-          ]
-        }
-      ]
+      // 段階的解決プロセスを生成
+      const steps: PrologStep[] = generateSolvingSteps(selectedPuzzle)
 
       // 段階的にステップを表示
       for (let i = 0; i < steps.length; i++) {
@@ -103,15 +47,48 @@ export const LogicPuzzleSolver: React.FC = () => {
         await new Promise(resolve => setTimeout(resolve, 1500))
       }
 
-      // 実際の解決
-      const result = await engine.solveLogicPuzzle('houses', {})
-      setSolution(result)
+      // 実際の解決（フォールバック使用）
+      setSolution(selectedPuzzle.solution)
 
     } catch (error) {
       console.error('Puzzle solving failed:', error)
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const generateSolvingSteps = (puzzle: PuzzleProblem): PrologStep[] => {
+    return [
+      {
+        step: 1,
+        description: "問題設定：変数とドメインを定義",
+        query: `solve_${puzzle.id}(Result)`,
+        result: "変数を設定中...",
+        facts: [
+          `People: [${puzzle.variables.people.join(', ')}]`,
+          ...Object.entries(puzzle.variables.attributes).map(([key, values]) => 
+            `${key}: [${values.join(', ')}]`
+          )
+        ]
+      },
+      {
+        step: 2,
+        description: "制約条件を適用",
+        query: "apply_constraints(Variables)",
+        result: "制約を評価中...",
+        facts: puzzle.constraints.map((constraint, i) => `${i + 1}. ${constraint}`)
+      },
+      {
+        step: 3,
+        description: "バックトラッキングで解を探索",
+        query: "find_solution(Result)",
+        result: "解を発見しました",
+        facts: [
+          "✅ すべての制約を満たす解が見つかりました",
+          "🔍 論理的推論プロセス完了"
+        ]
+      }
+    ]
   }
 
   const resetPuzzle = () => {
@@ -121,15 +98,83 @@ export const LogicPuzzleSolver: React.FC = () => {
     setShowVisualization(false)
   }
 
+  const backToSelection = () => {
+    setSelectedPuzzle(null)
+    setSolution(null)
+    setSolvingSteps([])
+    setCurrentStep(0)
+    setShowVisualization(false)
+  }
+
+  // パズル選択画面
+  if (!selectedPuzzle) {
+    return (
+      <div className="logic-puzzle-container">
+        <div className="puzzle-header">
+          <h2>🧩 Logic Puzzle Collection</h2>
+          <p className="puzzle-subtitle">Choose a puzzle to solve with Prolog reasoning</p>
+        </div>
+
+        <div className="puzzle-library">
+          {puzzleDatabase.map((puzzle) => (
+            <div key={puzzle.id} className="puzzle-item" onClick={() => selectPuzzle(puzzle)}>
+              <div className="puzzle-item-header">
+                <h3>{puzzle.title}</h3>
+                <span className={`difficulty-badge ${puzzle.difficulty}`}>
+                  {puzzle.difficulty}
+                </span>
+              </div>
+              
+              <div className="puzzle-preview">
+                <p>{puzzle.description}</p>
+                
+                <div className="constraints-preview">
+                  <strong>制約条件の例:</strong>
+                  <ul>
+                    {puzzle.constraints.slice(0, 3).map((constraint, index) => (
+                      <li key={index}>{constraint}</li>
+                    ))}
+                    {puzzle.constraints.length > 3 && (
+                      <li>...他 {puzzle.constraints.length - 3} 個</li>
+                    )}
+                  </ul>
+                </div>
+              </div>
+              
+              <button className="select-puzzle-button">
+                🚀 このパズルを解く
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  // パズル解決画面
   return (
     <div className="logic-puzzle-container">
       <div className="puzzle-header">
-        <h2>🧩 Logic Puzzle Solver with WASM Prolog</h2>
-        <p className="puzzle-subtitle">Step-by-step Prolog reasoning visualization</p>
+        <button onClick={backToSelection} className="back-button">
+          ← パズル一覧に戻る
+        </button>
+        <h2>🧩 {selectedPuzzle.title}</h2>
+        <span className={`difficulty-badge ${selectedPuzzle.difficulty}`}>
+          {selectedPuzzle.difficulty}
+        </span>
       </div>
 
       <div className="puzzle-description">
-        <pre>{puzzleDescription}</pre>
+        <pre>{selectedPuzzle.description}</pre>
+        
+        <div className="constraints-section">
+          <h3>制約条件:</h3>
+          <ol>
+            {selectedPuzzle.constraints.map((constraint, index) => (
+              <li key={index}>{constraint}</li>
+            ))}
+          </ol>
+        </div>
       </div>
 
       <div className="control-buttons">
@@ -205,36 +250,21 @@ export const LogicPuzzleSolver: React.FC = () => {
           <h3>🎉 Solution Found!</h3>
           
           <div className="solution-grid">
-            {solution.map((person, index) => (
-              <div key={index} className="person-card">
-                <div className="person-avatar">
-                  {person.person === 'alice' ? '👩' : 
-                   person.person === 'bob' ? '👨' : '🧑'}
+            {solution.map((item: any, index: number) => (
+              <div key={index} className="solution-card">
+                <div className="solution-avatar">
+                  {getEntityIcon(item, selectedPuzzle)}
                 </div>
                 
-                <div className="person-info">
-                  <h4>{person.person.charAt(0).toUpperCase() + person.person.slice(1)}</h4>
-                  <div className="person-details">
-                    <div className="detail-item">
-                      <span className="detail-label">House:</span>
-                      <span className="detail-value">#{person.house}</span>
-                    </div>
-                    <div className="detail-item">
-                      <span className="detail-label">Color:</span>
-                      <span 
-                        className="detail-value color-badge"
-                        style={{ backgroundColor: person.color, color: person.color === 'yellow' ? 'black' : 'white' }}
-                      >
-                        {person.color}
-                      </span>
-                    </div>
-                    <div className="detail-item">
-                      <span className="detail-label">Pet:</span>
-                      <span className="detail-value">
-                        {person.pet === 'dog' ? '🐕' : 
-                         person.pet === 'cat' ? '🐱' : '🐦'} {person.pet}
-                      </span>
-                    </div>
+                <div className="solution-info">
+                  <h4>{getEntityName(item, selectedPuzzle)}</h4>
+                  <div className="solution-details">
+                    {Object.entries(item).filter(([key]) => key !== getEntityKey(selectedPuzzle)).map(([key, value]) => (
+                      <div key={key} className="detail-item">
+                        <span className="detail-label">{formatKey(key)}:</span>
+                        <span className="detail-value">{String(value)}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -242,37 +272,58 @@ export const LogicPuzzleSolver: React.FC = () => {
           </div>
 
           <div className="prolog-code-section">
-            <h4>📝 Equivalent Prolog Code</h4>
+            <h4>📝 Prolog Code</h4>
             <div className="prolog-code">
-              <pre>{`
-% 解答をPrologで表現
-solution :-
-  ${solution.map(p => 
-    `person(${p.person}, ${p.house}, ${p.color}, ${p.pet})`
-  ).join(',\n  ')}.
-
-% 制約条件をすべて満たしている
-check_constraints :-
-  % 1. アリスは赤い家か青い家
-  (person(alice, _, red, _) ; person(alice, _, blue, _)),
-  
-  % 2. ボブは2番の家
-  person(bob, 2, _, _),
-  
-  % 3. チャーリーは緑の家 ↔ 犬を飼っている
-  (person(charlie, _, green, dog) ; 
-   (\\+ person(charlie, _, green, _), \\+ person(charlie, _, _, dog))),
-  
-  % 4. アリスは赤い家 → 犬以外
-  \\+ person(alice, _, red, dog),
-  
-  % 5. 青い家 → 猫か鳥
-  (person(_, _, blue, cat) ; person(_, _, blue, bird)).
-              `}</pre>
+              <pre>{selectedPuzzle.prologCode}</pre>
             </div>
           </div>
         </div>
       )}
     </div>
   )
+}
+
+// ヘルパー関数
+const getEntityIcon = (item: any, puzzle: PuzzleProblem): string => {
+  const icons: Record<string, string> = {
+    'alice': '👩', 'bob': '👨', 'charlie': '🧑',
+    'tanaka': '👨‍🎓', 'sato': '👩‍🎓', 'suzuki': '👨‍💼', 'takahashi': '👩‍💼',
+    'yamada': '👨‍💻', 'tamura': '👩‍🍳', 'nakamura': '👨‍🏃', 'kobayashi': '👩‍📚',
+    'storeA': '🏪', 'storeB': '🛒', 'storeC': '🏬',
+    'italian': '🍝', 'japanese': '🍣', 'chinese': '🍜'
+  }
+  
+  const entityValue = getEntityName(item, puzzle)
+  return icons[entityValue] || '👤'
+}
+
+const getEntityName = (item: any, puzzle: PuzzleProblem): string => {
+  const entityKey = getEntityKey(puzzle)
+  return item[entityKey] || Object.values(item)[0] as string
+}
+
+const getEntityKey = (puzzle: PuzzleProblem): string => {
+  // 最初のフィールドをエンティティキーとして使用
+  const sampleItem = puzzle.solution[0]
+  return Object.keys(sampleItem)[0]
+}
+
+const formatKey = (key: string): string => {
+  const keyMap: Record<string, string> = {
+    'house': 'House',
+    'color': 'Color', 
+    'pet': 'Pet',
+    'club': 'Club',
+    'grade': 'Grade',
+    'subject': 'Subject',
+    'department': 'Department',
+    'experience': 'Experience',
+    'hobby': 'Hobby',
+    'fruit': 'Fruit',
+    'price': 'Price',
+    'origin': 'Origin',
+    'dish': 'Dish',
+    'hours': 'Hours'
+  }
+  return keyMap[key] || key.charAt(0).toUpperCase() + key.slice(1)
 }

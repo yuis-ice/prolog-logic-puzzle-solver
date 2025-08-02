@@ -12,6 +12,7 @@
 .puzzle-header {
   text-align: center;
   margin-bottom: 30px;
+  position: relative;
 }
 
 .puzzle-header h2 {
@@ -24,6 +25,204 @@
   font-size: 1.2em;
   opacity: 0.9;
   margin: 0;
+}
+
+.back-button {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-50%) translateY(-2px);
+}
+
+/* パズルライブラリ */
+.puzzle-library {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.puzzle-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 25px;
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.puzzle-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.puzzle-item:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.puzzle-item:hover::before {
+  left: 100%;
+}
+
+.puzzle-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.puzzle-item-header h3 {
+  font-size: 1.4em;
+  margin: 0;
+  color: #feca57;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.puzzle-preview {
+  margin-bottom: 20px;
+}
+
+.puzzle-preview p {
+  font-size: 0.95em;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+
+.constraints-preview {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+.constraints-preview strong {
+  color: #2ed573;
+  font-size: 0.9em;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.constraints-preview ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.85em;
+}
+
+.constraints-preview li {
+  margin: 4px 0;
+  line-height: 1.3;
+}
+
+.select-puzzle-button {
+  background: linear-gradient(45deg, #ff6b6b, #feca57);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 20px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+}
+
+.select-puzzle-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 107, 107, 0.6);
+}
+
+/* 制約条件セクション */
+.constraints-section {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.constraints-section h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #2ed573;
+  font-size: 1.3em;
+}
+
+.constraints-section ol {
+  margin: 0;
+  padding-left: 25px;
+}
+
+.constraints-section li {
+  margin: 8px 0;
+  line-height: 1.5;
+  font-size: 1.05em;
+}
+
+/* Solution cards */
+.solution-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.solution-card:hover {
+  transform: translateY(-5px);
+}
+
+.solution-avatar {
+  font-size: 3em;
+  margin-bottom: 15px;
+}
+
+.solution-info h4 {
+  font-size: 1.3em;
+  margin-bottom: 15px;
+  color: #feca57;
+  text-transform: capitalize;
+}
+
+.solution-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .puzzle-description {

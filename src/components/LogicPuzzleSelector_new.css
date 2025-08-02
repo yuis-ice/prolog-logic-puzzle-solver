@@ -1,0 +1,324 @@
+.puzzle-selector-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  color: white;
+  min-height: 100vh;
+}
+
+.selector-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.selector-header h1 {
+  font-size: 3.5em;
+  margin-bottom: 15px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(45deg, #feca57, #ff9ff3, #54a0ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 3s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.selector-subtitle {
+  font-size: 1.3em;
+  opacity: 0.9;
+  margin: 0;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.puzzles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.puzzle-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px;
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.puzzle-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.puzzle-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.puzzle-card:hover::before {
+  left: 100%;
+}
+
+.puzzle-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.puzzle-card-header h3 {
+  font-size: 1.8em;
+  margin: 0;
+  color: #feca57;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.difficulty-badge {
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.difficulty-badge.medium {
+  background: linear-gradient(45deg, #feca57, #ff9ff3);
+  color: white;
+}
+
+.difficulty-badge.advanced {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  color: white;
+}
+
+.difficulty-badge.expert {
+  background: linear-gradient(45deg, #a55eea, #3742fa);
+  color: white;
+}
+
+.puzzle-description {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.puzzle-technology {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.tech-label {
+  font-weight: bold;
+  color: #feca57;
+}
+
+.tech-value {
+  font-style: italic;
+  color: #54a0ff;
+}
+
+.puzzle-features {
+  margin-bottom: 25px;
+}
+
+.puzzle-features h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.1em;
+  color: #2ed573;
+}
+
+.puzzle-features ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.puzzle-features li {
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.puzzle-features li::marker {
+  content: "✨ ";
+}
+
+.puzzle-card-footer {
+  text-align: center;
+}
+
+.select-puzzle-btn {
+  background: linear-gradient(45deg, #ff6b6b, #feca57);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 25px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+  width: 100%;
+}
+
+.select-puzzle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+  background: linear-gradient(45deg, #feca57, #ff6b6b);
+}
+
+.technology-info {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.technology-info h2 {
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 40px;
+  color: #feca57;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.tech-stack {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.tech-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.tech-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-5px);
+}
+
+.tech-icon {
+  font-size: 3em;
+  flex-shrink: 0;
+}
+
+.tech-item h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.3em;
+  color: #54a0ff;
+}
+
+.tech-item p {
+  margin: 0;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+/* アニメーション */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.puzzle-card {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.puzzle-card:nth-child(1) { animation-delay: 0.1s; }
+.puzzle-card:nth-child(2) { animation-delay: 0.2s; }
+.puzzle-card:nth-child(3) { animation-delay: 0.3s; }
+
+.tech-item {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.tech-item:nth-child(1) { animation-delay: 0.4s; }
+.tech-item:nth-child(2) { animation-delay: 0.5s; }
+.tech-item:nth-child(3) { animation-delay: 0.6s; }
+.tech-item:nth-child(4) { animation-delay: 0.7s; }
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+  .puzzle-selector-container {
+    padding: 20px 15px;
+  }
+  
+  .selector-header h1 {
+    font-size: 2.5em;
+  }
+  
+  .puzzles-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .puzzle-card {
+    padding: 20px;
+  }
+  
+  .puzzle-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .tech-stack {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .tech-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .technology-info {
+    padding: 30px 20px;
+  }
+  
+  .technology-info h2 {
+    font-size: 2em;
+  }
+}
