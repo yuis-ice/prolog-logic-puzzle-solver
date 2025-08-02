@@ -1,43 +1,60 @@
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import { PrologEngine } from './hooks/usePrologEngine'
+import { LogicPuzzleSelector } from './components/LogicPuzzleSelector'
 import SudokuSolver from './components/SudokuSolver'
-import LogicPuzzleSelector from './components/LogicPuzzleSelector'
+import { LogicPuzzleSolver } from './components/LogicPuzzleSolver'
 import './App.css'
 
 function App() {
-  const [selectedPuzzle, setSelectedPuzzle] = useState<string>('sudoku')
-  const prologEngine = new PrologEngine()
+  const [currentPuzzle, setCurrentPuzzle] = useState<string | null>(null)
+  const [prologEngine] = useState(() => new PrologEngine())
 
-  const handlePuzzleChange = useCallback((puzzle: string) => {
-    setSelectedPuzzle(puzzle)
-  }, [])
+  const handlePuzzleSelect = (puzzleType: string) => {
+    setCurrentPuzzle(puzzleType)
+  }
 
-  const renderPuzzle = () => {
-    switch (selectedPuzzle) {
+  const handleBackToSelector = () => {
+    setCurrentPuzzle(null)
+  }
+
+  const renderCurrentPuzzle = () => {
+    switch (currentPuzzle) {
       case 'sudoku':
-        return <SudokuSolver prologEngine={prologEngine} />
+        return <SudokuSolver prologEngine={prologEngine} onBack={handleBackToSelector} />
+      case 'logic':
+        return <LogicPuzzleSolver />
+      case 'zebra':
+        return (
+          <div className="coming-soon-page">
+            <h2>🦓 Zebra Puzzle</h2>
+            <p>Einstein's riddle implementation coming soon...</p>
+            <button onClick={handleBackToSelector} className="back-button">
+              ← Back to Selection
+            </button>
+          </div>
+        )
       default:
-        return <div>パズルを選択してください</div>
+        return <LogicPuzzleSelector onPuzzleSelect={handlePuzzleSelect} />
     }
   }
 
   return (
     <div className="app">
-      <header className="app-header">
-        <h1>Prolog論理パズルソルバー</h1>
-        <p>Tau PrologとWASMを使った論理パズル解決アプリ</p>
-      </header>
+      <div className="app-header">
+        {currentPuzzle && (
+          <button onClick={handleBackToSelector} className="back-button">
+            ← Back to Puzzle Selection
+          </button>
+        )}
+      </div>
       
       <main className="app-main">
-        <LogicPuzzleSelector 
-          selectedPuzzle={selectedPuzzle}
-          onPuzzleChange={handlePuzzleChange}
-        />
-        
-        <div className="puzzle-container">
-          {renderPuzzle()}
-        </div>
+        {renderCurrentPuzzle()}
       </main>
+      
+      <footer className="app-footer">
+        <p>🧩 Logic Puzzle App with WASM Prolog • React + TypeScript</p>
+      </footer>
     </div>
   )
 }

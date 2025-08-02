@@ -1,0 +1,372 @@
+.logic-puzzle-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  color: white;
+  min-height: 100vh;
+}
+
+.puzzle-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.puzzle-header h2 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.puzzle-subtitle {
+  font-size: 1.2em;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.puzzle-description {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.puzzle-description pre {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.solve-button, .reset-button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.solve-button {
+  background: linear-gradient(45deg, #ff6b6b, #feca57);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.solve-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+}
+
+.solve-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.reset-button {
+  background: linear-gradient(45deg, #3742fa, #2f3542);
+  color: white;
+  box-shadow: 0 4px 15px rgba(55, 66, 250, 0.4);
+}
+
+.reset-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(55, 66, 250, 0.6);
+}
+
+.visualization-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  user-select: none;
+}
+
+.visualization-toggle input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #ff6b6b;
+}
+
+.solving-visualization {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.solving-visualization h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.reasoning-step {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-left: 4px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.reasoning-step.completed {
+  border-left-color: #2ed573;
+  background: rgba(46, 213, 115, 0.1);
+}
+
+.reasoning-step.pending {
+  border-left-color: #ffa502;
+  background: rgba(255, 165, 2, 0.1);
+}
+
+.step-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.step-number {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.step-status {
+  font-size: 1.5em;
+}
+
+.step-content {
+  padding-left: 10px;
+}
+
+.step-description {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.prolog-query {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.prolog-query code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95em;
+  color: #feca57;
+}
+
+.step-result {
+  margin: 10px 0;
+  font-style: italic;
+}
+
+.current-facts {
+  margin-top: 15px;
+}
+
+.current-facts ul {
+  margin: 5px 0 0 20px;
+  padding: 0;
+}
+
+.current-facts li {
+  margin: 5px 0;
+  list-style-type: none;
+}
+
+.current-facts li:before {
+  content: "▶ ";
+  color: #2ed573;
+  font-weight: bold;
+}
+
+.current-facts code {
+  font-family: 'Courier New', monospace;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #feca57;
+}
+
+.solution-display {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 30px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.solution-display h3 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.solution-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.person-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.person-card:hover {
+  transform: translateY(-5px);
+}
+
+.person-avatar {
+  font-size: 4em;
+  margin-bottom: 15px;
+}
+
+.person-info h4 {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  color: #feca57;
+}
+
+.person-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-label {
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+.detail-value {
+  font-weight: 500;
+}
+
+.color-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.9em;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.prolog-code-section {
+  margin-top: 30px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  padding: 25px;
+}
+
+.prolog-code-section h4 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.3em;
+  color: #feca57;
+}
+
+.prolog-code {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.prolog-code pre {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  line-height: 1.6;
+  margin: 0;
+  color: #e6e6e6;
+}
+
+/* アニメーション */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reasoning-step {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.person-card {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+  .logic-puzzle-container {
+    padding: 15px;
+  }
+  
+  .puzzle-header h2 {
+    font-size: 2em;
+  }
+  
+  .control-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .solve-button, .reset-button {
+    width: 100%;
+  }
+  
+  .solution-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .detail-item {
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+  }
+}

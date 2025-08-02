@@ -4,9 +4,10 @@ import './SudokuSolver.css'
 
 interface SudokuSolverProps {
   prologEngine: PrologEngine
+  onBack?: () => void
 }
 
-const SudokuSolver: React.FC<SudokuSolverProps> = ({ prologEngine }) => {
+const SudokuSolver: React.FC<SudokuSolverProps> = ({ prologEngine, onBack }) => {
   const [grid, setGrid] = useState<number[][]>(() => {
     // 解決可能な数独パズル（簡単）
     return [
@@ -73,8 +74,16 @@ const SudokuSolver: React.FC<SudokuSolverProps> = ({ prologEngine }) => {
 
   return (
     <div className="sudoku-solver">
-      <h2>数独ソルバー</h2>
-      <p>Tau Prologを使って数独パズルを解決します</p>
+      {onBack && (
+        <div className="puzzle-header">
+          <button onClick={onBack} className="back-button">
+            ← Back to Selection
+          </button>
+        </div>
+      )}
+      
+      <h2>🔢 Sudoku Solver</h2>
+      <p>Backtracking algorithm for solving 9x9 Sudoku puzzles</p>
       
       <div className="sudoku-grid">
         {displayGrid.map((row, rowIndex) => (
