@@ -1,0 +1,204 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement for the Prolog Logic Puzzle Solver
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new feature! Please fill out this form to help us understand your idea.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Prerequisites
+      description: Please confirm you have completed these steps
+      options:
+        - label: I have searched for existing feature requests to avoid duplicates
+          required: true
+        - label: I have checked the roadmap and planned features
+          required: true
+        - label: I have read the contribution guidelines
+          required: true
+
+  - type: dropdown
+    id: feature-type
+    attributes:
+      label: Feature Type
+      description: What type of feature are you requesting?
+      options:
+        - New Puzzle Type
+        - UI/UX Enhancement
+        - Performance Improvement
+        - Educational Feature
+        - Accessibility Feature
+        - Developer Experience
+        - Prolog Engine Enhancement
+        - Mobile/Responsive Feature
+        - Integration/Export Feature
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? What use case does it address?
+      placeholder: |
+        Is your feature request related to a problem? Please describe.
+        A clear and concise description of what the problem is.
+        Example: "I'm always frustrated when..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like to see implemented
+      placeholder: |
+        A clear and concise description of what you want to happen.
+        Include specific details about:
+        - How should it work?
+        - What should the user experience be?
+        - Any specific requirements?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions
+      description: Have you considered any alternative solutions or features?
+      placeholder: |
+        A clear and concise description of any alternative solutions or features you've considered.
+        Why did you choose the proposed solution over alternatives?
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Feature Priority
+      description: How important is this feature to you?
+      options:
+        - Critical (Blocking current use)
+        - High (Would significantly improve experience)
+        - Medium (Nice to have)
+        - Low (Minor improvement)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Implementation Complexity
+      description: How complex do you think this feature would be to implement?
+      options:
+        - Simple (Small change, low effort)
+        - Medium (Moderate change, some effort)
+        - Complex (Major change, significant effort)
+        - Unknown (Not sure about complexity)
+    validations:
+      required: true
+
+  - type: textarea
+    id: user-story
+    attributes:
+      label: User Story
+      description: Describe the feature as a user story
+      placeholder: |
+        As a [type of user], I want [some goal] so that [some reason].
+        
+        Example:
+        As a teacher, I want to create custom puzzles with my own constraints 
+        so that I can create exercises specific to my curriculum.
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What specific criteria must be met for this feature to be considered complete?
+      placeholder: |
+        - [ ] Criteria 1: Specific behavior or functionality
+        - [ ] Criteria 2: Another requirement
+        - [ ] Criteria 3: Edge case handling
+        - [ ] Criteria 4: Performance requirements
+        - [ ] Criteria 5: Accessibility requirements
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups or Examples
+      description: If applicable, add mockups, sketches, or examples to help explain your feature
+      placeholder: |
+        You can paste images directly here or provide links to mockups.
+        Include examples from other applications if relevant.
+
+  - type: dropdown
+    id: target-users
+    attributes:
+      label: Target Users
+      description: Who would primarily benefit from this feature?
+      multiple: true
+      options:
+        - Students (Learning logic/programming)
+        - Teachers (Educational use)
+        - Developers (Contributing to project)
+        - Logic Puzzle Enthusiasts
+        - Researchers (Academic use)
+        - General Users (Casual use)
+        - Accessibility Users
+        - Mobile Users
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Expected Impact
+      description: What positive impact would this feature have?
+      placeholder: |
+        Describe the expected benefits:
+        - User experience improvements
+        - Educational value
+        - Performance gains
+        - Accessibility improvements
+        - Community growth potential
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context, research, or information about the feature request here
+      placeholder: |
+        - Related features or dependencies
+        - Research or examples from other applications
+        - Technical considerations
+        - Links to relevant documentation
+        - Community feedback or discussions
+
+  - type: checkboxes
+    id: willingness
+    attributes:
+      label: Contribution
+      description: Are you willing to help implement this feature?
+      options:
+        - label: I am willing to submit a pull request to implement this feature
+        - label: I can help with design/mockups
+        - label: I can help with testing once implemented
+        - label: I can provide additional requirements/feedback during development
+        - label: I have relevant expertise to contribute to this feature
+
+  - type: dropdown
+    id: timeline
+    attributes:
+      label: Desired Timeline
+      description: When would you like to see this feature implemented?
+      options:
+        - ASAP (Critical need)
+        - Next release (1-2 months)
+        - Next major version (3-6 months)
+        - Future release (6+ months)
+        - No specific timeline

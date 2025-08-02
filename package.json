@@ -1,7 +1,23 @@
 {
-  "name": "prolog-sample-app",
+  "name": "prolog-logic-puzzle-solver",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Interactive logic puzzle solver using Prolog and WebAssembly with step-by-step reasoning visualization",
+  "keywords": ["prolog", "logic-puzzles", "constraint-satisfaction", "webassembly", "react", "typescript", "education"],
+  "author": {
+    "name": ".fumiya.tsx",
+    "email": "jobs.fumiya@pm.me",
+    "url": "https://github.com/yuis-ice"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yuis-ice/prolog-logic-puzzle-solver.git"
+  },
+  "homepage": "https://yuis-ice.github.io/prolog-logic-puzzle-solver",
+  "bugs": {
+    "url": "https://github.com/yuis-ice/prolog-logic-puzzle-solver/issues"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",

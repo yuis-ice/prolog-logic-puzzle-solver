@@ -1,4 +1,4 @@
-// 論理パズル問題データベース
+// Logic Puzzle Problem Database
 export interface PuzzleProblem {
   id: string
   title: string
@@ -18,17 +18,17 @@ export interface PuzzleProblem {
 export const puzzleDatabase: PuzzleProblem[] = [
   {
     id: 'houses_basic',
-    title: 'アリス、ボブ、チャーリーの家パズル',
-    description: `3人の人がいます：アリス、ボブ、チャーリー
-3つの家があります：1番、2番、3番
-3つの色があります：赤、青、緑
-3匹のペットがいます：犬、猫、鳥`,
+    title: 'Alice, Bob, and Charlie Houses Puzzle',
+    description: `Three people: Alice, Bob, Charlie
+Three houses: 1st, 2nd, 3rd
+Three colors: Red, Blue, Green
+Three pets: Dog, Cat, Bird`,
     constraints: [
-      'アリスは赤い家か青い家に住んでいる',
-      'ボブは2番の家に住んでいる',
-      'チャーリーは緑の家に住んでいる場合のみ犬を飼っている',
-      'アリスは赤い家に住んでいて犬を飼ってはいない',
-      '青い家の住人は猫か鳥を飼っている'
+      'Alice lives in either a red or blue house',
+      'Bob lives in house number 2',
+      'Charlie has a dog only if he lives in a green house',
+      'Alice lives in a red house and does not have a dog',
+      'The person in the blue house has either a cat or bird'
     ],
     variables: {
       people: ['alice', 'bob', 'charlie'],
@@ -39,7 +39,7 @@ export const puzzleDatabase: PuzzleProblem[] = [
       }
     },
     prologCode: `
-% アリス、ボブ、チャーリーの家パズル
+% Alice, Bob, and Charlie Houses Puzzle
 solve_houses(People) :-
   People = [person(alice, House1, Color1, Pet1), 
             person(bob, House2, Color2, Pet2), 
@@ -83,18 +83,18 @@ member(X, [_|T]) :- member(X, T).
 
   {
     id: 'school_clubs',
-    title: '学校のクラブ活動パズル',
-    description: `4人の学生がいます：田中、佐藤、鈴木、高橋
-4つのクラブがあります：サッカー、テニス、野球、バスケ
-4つの学年があります：1年、2年、3年、4年
-4つの好きな科目があります：数学、英語、理科、社会`,
+    title: 'School Club Activities Puzzle',
+    description: `Four students: Tanaka, Sato, Suzuki, Takahashi
+Four clubs: Soccer, Tennis, Baseball, Basketball
+Four grades: 1st year, 2nd year, 3rd year, 4th year
+Four favorite subjects: Math, English, Science, Social Studies`,
     constraints: [
-      '田中はサッカー部で数学が好き',
-      '2年生はテニス部に所属している',
-      '鈴木は理科が好きで3年生',
-      '野球部の人は英語が好き',
-      '高橋は1年生ではない',
-      'バスケ部の人は社会が好き'
+      'Tanaka is in the soccer club and likes math',
+      'The 2nd year student is in the tennis club',
+      'Suzuki likes science and is a 3rd year student',
+      'The baseball club member likes English',
+      'Takahashi is not a 1st year student',
+      'The basketball club member likes social studies'
     ],
     variables: {
       people: ['tanaka', 'sato', 'suzuki', 'takahashi'],
@@ -105,7 +105,7 @@ member(X, [_|T]) :- member(X, T).
       }
     },
     prologCode: `
-% 学校のクラブ活動パズル
+% School Club Activities Puzzle
 solve_clubs(Students) :-
   Students = [student(tanaka, Club1, Grade1, Subject1),
               student(sato, Club2, Grade2, Subject2),
@@ -116,7 +116,7 @@ solve_clubs(Students) :-
   permutation(['1st', '2nd', '3rd', '4th'], [Grade1, Grade2, Grade3, Grade4]),
   permutation([math, english, science, social], [Subject1, Subject2, Subject3, Subject4]),
   
-  % 制約条件
+  % Constraint conditions
   member(student(tanaka, soccer, _, math), Students),
   member(student(_, tennis, '2nd', _), Students),
   member(student(suzuki, _, '3rd', science), Students),
@@ -135,18 +135,18 @@ solve_clubs(Students) :-
 
   {
     id: 'fruit_market',
-    title: 'フルーツマーケットパズル',
-    description: `3つの果物店があります：A店、B店、C店
-3種類の果物があります：りんご、バナナ、オレンジ
-3つの価格帯があります：安い、普通、高い
-3つの産地があります：国内、アジア、アメリカ`,
+    title: 'Fruit Market Puzzle',
+    description: `Three fruit stores: Store A, Store B, Store C
+Three types of fruits: Apple, Banana, Orange
+Three price ranges: Cheap, Normal, Expensive
+Three origins: Domestic, Asian, American`,
     constraints: [
-      'A店は国内産の果物を扱っている',
-      'バナナは普通の価格で売られている',
-      'オレンジを扱う店は高い価格設定',
-      'アジア産の果物は安い価格',
-      'C店はりんごを扱っていない',
-      'アメリカ産の果物は1つの店のみ'
+      'Store A sells domestic fruits',
+      'Bananas are sold at normal price',
+      'The store selling oranges has expensive pricing',
+      'Asian fruits are sold at cheap prices',
+      'Store C does not sell apples',
+      'American fruits are sold by only one store'
     ],
     variables: {
       people: ['storeA', 'storeB', 'storeC'],
@@ -157,7 +157,7 @@ solve_clubs(Students) :-
       }
     },
     prologCode: `
-% フルーツマーケットパズル
+% Fruit Market Puzzle
 solve_market(Stores) :-
   Stores = [store(storeA, Fruit1, Price1, Origin1),
             store(storeB, Fruit2, Price2, Origin2),
@@ -167,13 +167,13 @@ solve_market(Stores) :-
   permutation([cheap, normal, expensive], [Price1, Price2, Price3]),
   permutation([domestic, asia, america], [Origin1, Origin2, Origin3]),
   
-  % 制約条件
+  % Constraint conditions
   member(store(storeA, _, _, domestic), Stores),
   member(store(_, banana, normal, _), Stores),
   member(store(_, orange, expensive, _), Stores),
   member(store(_, _, cheap, asia), Stores),
   \\+ member(store(storeC, apple, _, _), Stores),
-  % アメリカ産は1つの店のみ（暗黙的に満たされる）
+  % American fruits are sold by only one store (implicitly satisfied)
   member(store(_, _, _, america), Stores).
     `,
     solution: [
@@ -186,19 +186,19 @@ solve_market(Stores) :-
 
   {
     id: 'office_workers',
-    title: 'オフィス勤務パズル',
-    description: `4人の社員がいます：山田、田村、中村、小林
-4つの部署があります：営業、開発、経理、人事
-4つの勤務年数があります：1年、3年、5年、10年
-4つの趣味があります：読書、映画、スポーツ、料理`,
+    title: 'Office Workers Puzzle',
+    description: `Four employees: Yamada, Tamura, Nakamura, Kobayashi
+Four departments: Sales, Development, Accounting, HR
+Four years of experience: 1 year, 3 years, 5 years, 10 years
+Four hobbies: Reading, Movies, Sports, Cooking`,
     constraints: [
-      '山田は開発部で5年の経験',
-      '営業部の人は読書が趣味',
-      '田村は料理が趣味で10年の経験',
-      '1年の経験の人は人事部',
-      '中村はスポーツが趣味',
-      '経理部の人は3年の経験',
-      '映画が趣味の人は営業部ではない'
+      'Yamada is in development department with 5 years experience',
+      'The sales department person likes reading',
+      'Tamura likes cooking and has 10 years experience',
+      'The person with 1 year experience is in HR department',
+      'Nakamura likes sports',
+      'The accounting department person has 3 years experience',
+      'The person who likes movies is not in sales department'
     ],
     variables: {
       people: ['yamada', 'tamura', 'nakamura', 'kobayashi'],
@@ -209,7 +209,7 @@ solve_market(Stores) :-
       }
     },
     prologCode: `
-% オフィス勤務パズル
+% Office Workers Puzzle
 solve_office(Workers) :-
   Workers = [worker(yamada, Dept1, Exp1, Hobby1),
              worker(tamura, Dept2, Exp2, Hobby2),
@@ -220,7 +220,7 @@ solve_office(Workers) :-
   permutation(['1year', '3years', '5years', '10years'], [Exp1, Exp2, Exp3, Exp4]),
   permutation([reading, movies, sports, cooking], [Hobby1, Hobby2, Hobby3, Hobby4]),
   
-  % 制約条件
+  % Constraint conditions
   member(worker(yamada, development, '5years', _), Workers),
   member(worker(_, sales, _, reading), Workers),
   member(worker(tamura, _, '10years', cooking), Workers),
@@ -240,18 +240,18 @@ solve_office(Workers) :-
 
   {
     id: 'restaurant_menu',
-    title: 'レストランメニューパズル',
-    description: `3つのレストランがあります：イタリアン、和食、中華
-3つの料理があります：パスタ、寿司、ラーメン
-3つの価格があります：1000円、1500円、2000円
-3つの営業時間があります：昼のみ、夜のみ、終日`,
+    title: 'Restaurant Menu Puzzle',
+    description: `Three restaurants: Italian, Japanese, Chinese
+Three dishes: Pasta, Sushi, Ramen
+Three prices: 1000 yen, 1500 yen, 2000 yen
+Three operating hours: Lunch only, Dinner only, All day`,
     constraints: [
-      'イタリアンレストランは終日営業',
-      'パスタは1500円',
-      '和食レストランは2000円のメニューがある',
-      'ラーメンは昼のみ営業の店で提供',
-      '1000円のメニューは夜のみ営業の店',
-      '中華レストランは寿司を提供しない'
+      'Italian restaurant operates all day',
+      'Pasta costs 1500 yen',
+      'Japanese restaurant has a 2000 yen menu item',
+      'Ramen is served at lunch-only restaurant',
+      '1000 yen menu is at dinner-only restaurant',
+      'Chinese restaurant does not serve sushi'
     ],
     variables: {
       people: ['italian', 'japanese', 'chinese'],
@@ -262,7 +262,7 @@ solve_office(Workers) :-
       }
     },
     prologCode: `
-% レストランメニューパズル
+% Restaurant Menu Puzzle
 solve_restaurant(Restaurants) :-
   Restaurants = [restaurant(italian, Dish1, Price1, Hours1),
                  restaurant(japanese, Dish2, Price2, Hours2),
@@ -272,7 +272,7 @@ solve_restaurant(Restaurants) :-
   permutation(['1000yen', '1500yen', '2000yen'], [Price1, Price2, Price3]),
   permutation([lunch_only, dinner_only, all_day], [Hours1, Hours2, Hours3]),
   
-  % 制約条件
+  % Constraint conditions
   member(restaurant(italian, _, _, all_day), Restaurants),
   member(restaurant(_, pasta, '1500yen', _), Restaurants),
   member(restaurant(japanese, _, '2000yen', _), Restaurants),
@@ -289,7 +289,7 @@ solve_restaurant(Restaurants) :-
   }
 ]
 
-// パズル生成用のテンプレート
+// Puzzle generation templates
 export interface PuzzleTemplate {
   id: string
   name: string
@@ -304,32 +304,32 @@ export interface PuzzleTemplate {
 export const puzzleTemplates: PuzzleTemplate[] = [
   {
     id: 'classic_assignment',
-    name: '古典的な割り当て問題',
+    name: 'Classic Assignment Problem',
     variables: {
       entities: 3,
       attributeTypes: 3,
       attributeValues: 3
     },
     constraintPatterns: [
-      '{entity} は {attribute1} を持つ',
-      '{entity} は {attribute2} ではない',
-      '{attribute1} を持つ人は {attribute3} も持つ',
-      '{value1} と {value2} は同じエンティティに属さない'
+      '{entity} has {attribute1}',
+      '{entity} is not {attribute2}',
+      'Person with {attribute1} also has {attribute3}',
+      '{value1} and {value2} do not belong to the same entity'
     ]
   },
   {
     id: 'conditional_logic',
-    name: '条件論理問題',
+    name: 'Conditional Logic Problem',
     variables: {
       entities: 4,
       attributeTypes: 3,
       attributeValues: 4
     },
     constraintPatterns: [
-      'もし {entity} が {attribute1} なら {attribute2} である',
-      '{attribute1} でない場合のみ {attribute3} である',
-      '{value1} または {value2} のいずれか',
-      '{entity} と {entity2} は異なる {attribute} を持つ'
+      'If {entity} has {attribute1} then {attribute2}',
+      'Only if not {attribute1} then {attribute3}',
+      'Either {value1} or {value2}',
+      '{entity} and {entity2} have different {attribute}'
     ]
   }
 ]

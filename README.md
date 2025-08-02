@@ -1,13 +1,139 @@
-# 論理パズルソルバー
+# 🧩 Prolog Logic Puzzle Solver
 
-React + TypeScriptを使った論理パズル解決Webアプリケーションです。
+A React TypeScript application that demonstrates logic puzzle solving using Tau Prolog and WebAssembly. This interactive educational tool allows users to explore constraint satisfaction problems through step-by-step Prolog reasoning.
 
-## 特徴
+![Screenshot](./screenshot.png)
 
-- **バックトラッキングアルゴリズム**: 高性能な数独ソルバー
-- **React + TypeScript**: モダンなフロントエンド技術
-- **レスポンシブデザイン**: デスクトップ・モバイル対応
-- **直感的UI**: 美しいガラスモーフィズムデザイン
+## 🚀 Features
+
+- **5 Logic Puzzles**: Diverse constraint satisfaction problems including houses, school clubs, fruit market, office workers, and restaurant menus
+- **Interactive Solver**: Step-by-step visualization of Prolog reasoning process
+- **WASM Performance**: Uses SWI-Prolog WebAssembly for fast constraint solving
+- **Educational Interface**: Shows logical deduction steps and constraint application
+- **Systematic Format**: Consistent puzzle structure for easy expansion and mass production
+
+## 🎯 Puzzle Types
+
+1. **Houses Puzzle** - Classic neighbor constraints with property assignments
+2. **School Clubs** - Membership rules and activity scheduling logic
+3. **Fruit Market** - Pricing and inventory constraint solving
+4. **Office Workers** - Desk assignments with department rules
+5. **Restaurant Menu** - Dietary restrictions and pricing logic
+
+## 🛠 Tech Stack
+
+- **Frontend**: React 19 with TypeScript
+- **Logic Engine**: Tau Prolog (SWI-Prolog WASM)
+- **Build Tool**: Vite 4.5.14
+- **Styling**: CSS with custom variables
+- **Package Manager**: npm
+
+## 📦 Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/yuis-ice/prolog-logic-puzzle-solver.git
+cd prolog-logic-puzzle-solver
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+## 🎮 Usage
+
+1. **Select a Puzzle**: Choose from 5 different logic puzzles
+2. **Review Constraints**: Read the problem description and constraints
+3. **Enable Visualization**: Toggle step-by-step reasoning to see Prolog in action
+4. **Solve**: Click "Solve with Prolog" to see the solution process
+5. **Explore**: Try different puzzles to understand various constraint patterns
+
+## 🏗 Project Structure
+
+```
+src/
+├── components/
+│   ├── LogicPuzzleSolver.tsx    # Main puzzle interface
+│   └── LogicPuzzleSolver.css    # Styling for puzzle components
+├── data/
+│   └── puzzleDatabase.ts        # Systematic puzzle definitions
+├── hooks/
+│   └── usePrologEngine.ts       # Prolog WASM integration
+└── App.tsx                      # Application entry point
+```
+
+## 🧠 How It Works
+
+1. **Puzzle Definition**: Each puzzle follows a systematic `PuzzleProblem` interface with variables, constraints, and Prolog code
+2. **Constraint Processing**: Prolog rules define logical relationships and constraints
+3. **Solution Search**: Backtracking algorithm explores the solution space
+4. **Visualization**: Step-by-step display shows the reasoning process
+
+## 🔧 Development
+
+```bash
+# Development server
+npm run dev
+
+# Type checking
+npm run lint
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 📝 Adding New Puzzles
+
+The project uses a systematic format for easy puzzle creation:
+
+```typescript
+{
+  id: 'puzzle_id',
+  title: 'Puzzle Title',
+  description: 'Problem description with entities and attributes',
+  constraints: ['List of constraint rules'],
+  variables: {
+    people: ['entity1', 'entity2'],
+    attributes: {
+      attribute1: ['value1', 'value2'],
+      attribute2: ['value3', 'value4']
+    }
+  },
+  prologCode: 'Prolog constraint satisfaction code',
+  solution: [/* Expected solution array */],
+  difficulty: 'easy' | 'medium' | 'hard'
+}
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) for details on how to submit pull requests, report issues, and contribute to the project.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔗 Links
+
+- **Demo**: [Live Demo](https://yuis-ice.github.io/prolog-logic-puzzle-solver)
+- **Repository**: [GitHub](https://github.com/yuis-ice/prolog-logic-puzzle-solver)
+- **Issues**: [Bug Reports & Feature Requests](https://github.com/yuis-ice/prolog-logic-puzzle-solver/issues)
+
+## 🏆 Acknowledgments
+
+- [SWI-Prolog](https://www.swi-prolog.org/) for the Prolog engine
+- [Tau Prolog](http://tau-prolog.org/) for JavaScript/WASM integration
+- [React](https://react.dev/) for the UI framework
+- [Vite](https://vitejs.dev/) for the build tooling
+
+---
+
+Built with ❤️ by [.fumiya.tsx](https://github.com/yuis-ice)
 
 ## 実装済み機能
 

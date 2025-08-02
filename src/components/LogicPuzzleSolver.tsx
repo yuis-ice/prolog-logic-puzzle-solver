@@ -37,17 +37,17 @@ export const LogicPuzzleSolver: React.FC = () => {
     setCurrentStep(0)
 
     try {
-      // 段階的解決プロセスを生成
+      // Generate step-by-step solving process
       const steps: PrologStep[] = generateSolvingSteps(selectedPuzzle)
 
-      // 段階的にステップを表示
+      // Display steps progressively
       for (let i = 0; i < steps.length; i++) {
         setSolvingSteps(prev => [...prev, steps[i]])
         setCurrentStep(i + 1)
         await new Promise(resolve => setTimeout(resolve, 1500))
       }
 
-      // 実際の解決（フォールバック使用）
+      // Actual solving (using fallback)
       setSolution(selectedPuzzle.solution)
 
     } catch (error) {
@@ -61,9 +61,9 @@ export const LogicPuzzleSolver: React.FC = () => {
     return [
       {
         step: 1,
-        description: "問題設定：変数とドメインを定義",
+        description: "Problem setup: Define variables and domains",
         query: `solve_${puzzle.id}(Result)`,
-        result: "変数を設定中...",
+        result: "Setting up variables...",
         facts: [
           `People: [${puzzle.variables.people.join(', ')}]`,
           ...Object.entries(puzzle.variables.attributes).map(([key, values]) => 
@@ -73,19 +73,19 @@ export const LogicPuzzleSolver: React.FC = () => {
       },
       {
         step: 2,
-        description: "制約条件を適用",
+        description: "Apply constraints",
         query: "apply_constraints(Variables)",
-        result: "制約を評価中...",
+        result: "Evaluating constraints...",
         facts: puzzle.constraints.map((constraint, i) => `${i + 1}. ${constraint}`)
       },
       {
         step: 3,
-        description: "バックトラッキングで解を探索",
+        description: "Search solution with backtracking",
         query: "find_solution(Result)",
-        result: "解を発見しました",
+        result: "Solution found",
         facts: [
-          "✅ すべての制約を満たす解が見つかりました",
-          "🔍 論理的推論プロセス完了"
+          "✅ Found solution satisfying all constraints",
+          "🔍 Logical reasoning process completed"
         ]
       }
     ]
@@ -129,20 +129,20 @@ export const LogicPuzzleSolver: React.FC = () => {
                 <p>{puzzle.description}</p>
                 
                 <div className="constraints-preview">
-                  <strong>制約条件の例:</strong>
+                  <strong>Example constraints:</strong>
                   <ul>
                     {puzzle.constraints.slice(0, 3).map((constraint, index) => (
                       <li key={index}>{constraint}</li>
                     ))}
                     {puzzle.constraints.length > 3 && (
-                      <li>...他 {puzzle.constraints.length - 3} 個</li>
+                      <li>...and {puzzle.constraints.length - 3} more</li>
                     )}
                   </ul>
                 </div>
               </div>
               
               <button className="select-puzzle-button">
-                🚀 このパズルを解く
+                🚀 Solve this puzzle
               </button>
             </div>
           ))}
@@ -151,12 +151,12 @@ export const LogicPuzzleSolver: React.FC = () => {
     )
   }
 
-  // パズル解決画面
+  // Puzzle solving screen
   return (
     <div className="logic-puzzle-container">
       <div className="puzzle-header">
         <button onClick={backToSelection} className="back-button">
-          ← パズル一覧に戻る
+          ← Back to puzzle list
         </button>
         <h2>🧩 {selectedPuzzle.title}</h2>
         <span className={`difficulty-badge ${selectedPuzzle.difficulty}`}>
@@ -168,7 +168,7 @@ export const LogicPuzzleSolver: React.FC = () => {
         <pre>{selectedPuzzle.description}</pre>
         
         <div className="constraints-section">
-          <h3>制約条件:</h3>
+          <h3>Constraints:</h3>
           <ol>
             {selectedPuzzle.constraints.map((constraint, index) => (
               <li key={index}>{constraint}</li>
@@ -283,7 +283,7 @@ export const LogicPuzzleSolver: React.FC = () => {
   )
 }
 
-// ヘルパー関数
+// Helper functions
 const getEntityIcon = (item: any, puzzle: PuzzleProblem): string => {
   const icons: Record<string, string> = {
     'alice': '👩', 'bob': '👨', 'charlie': '🧑',
@@ -303,7 +303,7 @@ const getEntityName = (item: any, puzzle: PuzzleProblem): string => {
 }
 
 const getEntityKey = (puzzle: PuzzleProblem): string => {
-  // 最初のフィールドをエンティティキーとして使用
+  // Use the first field as entity key
   const sampleItem = puzzle.solution[0]
   return Object.keys(sampleItem)[0]
 }

@@ -1,0 +1,21 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/yuis-ice/prolog-logic-puzzle-solver/discussions
+    about: Ask questions, share ideas, and discuss the project with the community
+  
+  - name: 📖 Documentation
+    url: https://github.com/yuis-ice/prolog-logic-puzzle-solver#readme
+    about: Check the README and documentation for usage instructions and FAQ
+  
+  - name: 🚀 Live Demo
+    url: https://yuis-ice.github.io/prolog-logic-puzzle-solver
+    about: Try the application live to understand features and functionality
+  
+  - name: 🤝 Contributing Guide
+    url: https://github.com/yuis-ice/prolog-logic-puzzle-solver/blob/main/CONTRIBUTING.md
+    about: Learn how to contribute to the project and development guidelines
+  
+  - name: ✉️ Contact Maintainer
+    url: mailto:jobs.fumiya@pm.me
+    about: Contact the project maintainer for sensitive issues or collaboration inquiries
