@@ -1,0 +1,124 @@
+.sudoku-solver {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.sudoku-grid {
+  display: inline-block;
+  border: 3px solid #333;
+  margin: 20px 0;
+  background-color: #333;
+}
+
+.sudoku-row {
+  display: flex;
+}
+
+.sudoku-cell {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #666;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: white;
+  color: #333;
+}
+
+.sudoku-cell:focus {
+  outline: 2px solid #007acc;
+  background-color: #f0f8ff;
+}
+
+.sudoku-cell.given {
+  background-color: #e6f3ff;
+  color: #0066cc;
+}
+
+.sudoku-cell.solved {
+  background-color: #e6ffe6;
+  color: #006600;
+}
+
+.sudoku-cell.empty {
+  background-color: #fafafa;
+}
+
+/* 3x3ボックスの境界線を強調 */
+.sudoku-row:nth-child(3n) .sudoku-cell {
+  border-bottom: 2px solid #333;
+}
+
+.sudoku-cell:nth-child(3n) {
+  border-right: 2px solid #333;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.solve-button {
+  background-color: #007acc;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.solve-button:hover:not(:disabled) {
+  background-color: #005c99;
+}
+
+.solve-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.reset-button {
+  background-color: #ff6b35;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reset-button:hover:not(:disabled) {
+  background-color: #e55a2e;
+}
+
+.clear-button {
+  background-color: #666;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.clear-button:hover:not(:disabled) {
+  background-color: #555;
+}
+
+.solution-info {
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #e6ffe6;
+  border: 1px solid #66cc66;
+  border-radius: 6px;
+  color: #006600;
+  font-size: 18px;
+  font-weight: bold;
+}
